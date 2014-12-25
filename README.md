@@ -1,6 +1,6 @@
 About
 -----------------------------------
-Frontend version of [Aisel](https://github.com/ivanproskuryakov/Aisel) package
+Frontend version of [Aisel](https://github.com/ivanproskuryakov/Aisel) package <br/>
 Project website: `http://aisel.co/`<br/>
 Demo: `http://ecommerce.aisel.co/en/` [frontenduser/frontenduser]<br/>
 
