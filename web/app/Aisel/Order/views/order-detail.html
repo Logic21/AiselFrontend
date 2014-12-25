@@ -1,0 +1,64 @@
+<div class="">
+    <div class="col-md-12 page-header">
+        <h2>Order #{{orderId}}</h2>
+        <p class=""><span class="glyphicon glyphicon-circle-arrow-left"></span>
+            <a ui-sref="orders({locale: locale})"> Back to orders</a></p>
+    </div>
+    <div class="" ng-if="isAuthenticated">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <!-- Order Details -->
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="glyphicon glyphicon-info-sign"></span> #{{orderDetails.id}} <br/>
+                                    <span class="glyphicon glyphicon-calendar"></span> {{orderDetails.created_at | date:"MM/dd/yyyy @ h:mma" }}<br/>
+                                </div>
+                                <div class="col-md-6">
+                                   Total: {{orderDetails.grandtotal}} {{currency}}<br/>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+
+                        <!-- Order Items -->
+                        <div class="col-md-12">
+                            <div ng-if="orderDetails.item.length > 0">
+                                <div class="cartItem" ng-repeat="item in orderDetails.item">
+                                    <div class="col-md-2">
+                                        <img class="img-rounded"
+                                             src="{{item.product.main_image.path}}"
+                                             data-holder-rendered="true" style="width: 100%;">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h4>{{item.name}}</h4>
+                                    </div>
+                                    <div class="col-md-1">
+                                        {{item.qty}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{item.price}} {{currency}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="pull-right">
+                                                <div class="alert alert-warning" role="alert">{{item.price*item.qty}} {{currency}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="sidebar" ng-include="'/app/Aisel/User/views/sidebar.html'"></div>
+        </div>
+    </div>
+</div>
