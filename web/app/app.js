@@ -23,13 +23,14 @@ define([
 
         var app = angular.module('app', [
             'ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'ui.bootstrap', 'ui.router',
-            'ui.utils', 'ui.validate', 'ui.gravatar', 'textAngular', 'ngDisqus', 'cgNotify'])
+            'ui.utils', 'ui.validate', 'ui.gravatar', 'textAngular', 'ngDisqus', 'cgNotify',
+            'environment'
+        ])
 
-        app.constant('API_URL', Aisel.settings.api)
-            .constant("PRIMARY_LOCALE", Aisel.settings.locale.primary)
+        app
             .value('appSettings', [])
-            .run(['$http', '$rootScope', 'rootService', 'initService',
-                function ($http, $rootScope, rootService, initService) {
+            .run(['$http', '$rootScope', 'settingsService', 'initService',
+                function ($http, $rootScope, settingsService, initService) {
                     initService.launch();
                 }])
             .config(function ($provide, $locationProvider, $httpProvider) {

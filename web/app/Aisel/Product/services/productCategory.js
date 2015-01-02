@@ -13,18 +13,24 @@
  */
 
 define(['app'], function (app) {
-    app.service('productCategoryService', ['$http', 'API_URL',
-        function ($http, API_URL) {
+    app.service('productCategoryService', ['$http', 'Environment',
+        function ($http, Environment) {
             return {
                 getCategories: function ($scope) {
-                    var locale = Aisel.getLocale();
-                    var url = API_URL + '/' + locale + '/product/category/list.json?limit=' + $scope.pageLimit + '&current=' + $scope.paginationPage;
+                    var locale = Environment.currentLocale();
+                    var url = Environment.settings.api + '/' + locale + '/product/category/list.json?limit=' + $scope.pageLimit + '&current=' + $scope.paginationPage;
                     console.log(url);
                     return $http.get(url);
                 },
                 getCategory: function (categoryId) {
-                    var locale = Aisel.getLocale();
-                    var url = API_URL + '/' + locale + '/product/category/view/' + categoryId + '.json';
+                    var locale = Environment.currentLocale();
+                    var url = Environment.settings.api + '/' + locale + '/product/category/view/' + categoryId + '.json';
+                    console.log(url);
+                    return $http.get(url);
+                },
+                getProductCategoryTree: function () {
+                    var locale = Environment.currentLocale();
+                    var url = Environment.settings.api + '/' + locale + '/product/category/tree.json';
                     console.log(url);
                     return $http.get(url);
                 }

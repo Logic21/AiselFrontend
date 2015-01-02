@@ -13,11 +13,9 @@
  */
 
 define(['app'], function (app) {
-    app.controller('UserCtrl', ['$log', '$modal', '$scope', '$routeParams', 'userService', 'notify',
-        function ($log, $modal, $scope, $routeParams, userService, notify) {
-            var locale = Aisel.getLocale();
-
-            $scope.loggedIn = false;
+    app.controller('UserCtrl', ['$log', '$modal', '$scope', '$rootScope', '$state', '$routeParams', 'userService', 'notify', 'Environment',
+        function ($log, $modal, $scope, $rootScope, $routeParams, $state, userService, notify, Environment) {
+            var locale = Environment.currentLocale();
 
             // User Registration
             $scope.submitRegistration = function (form) {
@@ -26,7 +24,7 @@ define(['app'], function (app) {
                         function (data, status) {
                             notify(data.message);
                             if (data.status) {
-                                window.location = "/";
+                                $state.transitionTo('userInformation', {locale: locale});
                             }
                         }
                     );
@@ -34,7 +32,6 @@ define(['app'], function (app) {
             };
 
             /**
-             * @ngdoc function
              * @param form registration form values
              * @description sends data to API layer and update user object
              */
@@ -43,9 +40,6 @@ define(['app'], function (app) {
                     userService.editDetails(form).success(
                         function (data, status) {
                             notify(data.message);
-//                        if (data.status) {
-//                            window.location = "/#/user/information/";
-//                        }
                         }
                     );
                 }
@@ -58,7 +52,7 @@ define(['app'], function (app) {
                         function (data, status) {
                             notify(data.message);
                             if (data.status) {
-                                window.location = "/";
+                                $state.transitionTo('userLogin', {locale: locale});
                             }
                         }
                     );
@@ -70,7 +64,8 @@ define(['app'], function (app) {
                 userService.signout($scope).success(
                     function (data, status) {
                         notify(data.message);
-                        window.location = "/";
+                        $rootScope.user = undefined;
+                        $state.transitionTo('homepage', {locale: locale});
                     }
                 );
 
@@ -81,7 +76,7 @@ define(['app'], function (app) {
                     function (data, status) {
                         notify(data.message);
                         if (data.status) {
-                            window.location = "/" + locale + "/user/information/";
+                            $state.transitionTo('userInformation', {locale: locale});
                         }
                     }
                 );

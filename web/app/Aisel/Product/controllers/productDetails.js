@@ -13,8 +13,8 @@
  */
 
 define(['app'], function (app) {
-    app.controller('ProductDetailCtrl', ['$scope', '$location', '$stateParams', 'productService', '$rootScope', 'cartService', 'notify', 'API_URL',
-        function ($scope, $location, $stateParams, productService, $rootScope, cartService, notify, API_URL) {
+    app.controller('ProductDetailCtrl', ['$scope', '$location', '$stateParams', 'productService', '$rootScope', 'cartService', 'notify', 'Environment', 'authService',
+        function ($scope, $location, $stateParams, productService, $rootScope, cartService, notify, Environment, authService) {
             $scope.isDisabled = true;
 
             var productURL = $stateParams.productId;
@@ -35,10 +35,8 @@ define(['app'], function (app) {
             $scope.addToCart = function () {
 
                 // if user is guest - redirect or login page
-                if ($rootScope.isAuthenticated == false) {
-                    notify('You need to login or register');
-                    var url = API_URL + '/user/login/';
-                    $location.path(url);
+                if (typeof $rootScope.user === 'undefined') {
+                    authService.authenticateWithModal();
                 } else {
                     $scope.isDisabled = true;
                     cartService.addToCart($scope).success(

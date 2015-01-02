@@ -8,13 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @name            AiselUser
- * @description     ...
+ * @name            KernelResource
+ * @description     Just a test filter
  */
 
 define(['app'], function (app) {
-    app.service('userCategoryService', ['$http',
-        function ($http) {
-            return {};
-        }]);
+    app.filter('text', function () {
+            return function (text, name) {
+                return text;
+            };
+        }
+    );
 });
